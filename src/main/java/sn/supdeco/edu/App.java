@@ -1,8 +1,10 @@
 package sn.supdeco.edu;
 
-import sn.supdeco.edu.models.Utilisateur;
-import sn.supdeco.edu.models.Voiture;
+
 import sn.supdeco.edu.services.IParking;
+import sn.supdeco.edu.services.MesMenus;
+import sn.supdeco.models.Utilisateur;
+import sn.supdeco.models.Voiture;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -21,12 +23,11 @@ public class App
         Scanner scanner = new Scanner(System.in);
         Utilisateur utilisateur = null;
         String message ="";
+        MesMenus menu= new MesMenus();
 
 
         int i = 1;
-
-        // test expression
-        while (i ==1) {
+        while (i == 1) {
             System.out.println("Faites votre choix:");
             System.out.println("1. Stationner vehicule");
             System.out.println("2. Recuperer  vehicule");
@@ -34,42 +35,16 @@ public class App
 
             int choice = scanner.nextInt();
 
-            switch ( choice){
+            switch (choice){
                 case 1:
-                    System.out.println("*********Information client****************");
-                    System.out.println("Saisir l'identifiant de l'utilisateur");
-                    String id = scanner.next();
-                    System.out.println("Saisir le nom de l'utilisateur");
-                    String nom = scanner.next();
-                    System.out.println("Saisir le prenom de l'utilisateur");
-                    String prenom = scanner.next();
-                    utilisateur = new Utilisateur(id,nom,prenom);
-                    System.out.println(utilisateur.getId()+" "+utilisateur.getNom());
-                    message = parking.creerUtilisateur(utilisateur);
-                    System.out.println(message);
-
-                    System.out.println("*********Information Vehicule****************");
-                    System.out.println("Saisir le matricule de votre voiture");
-                    String matricule = scanner.next();
-                    System.out.println("Saisir le type de votre voiture");
-                    String typeVoiture = scanner.next();
-
-                    Voiture voiture = new Voiture(matricule,typeVoiture,utilisateur);
-                    message = parking.creerVoiture(voiture,utilisateur);
-                    System.out.println(message);
+                    menu.stationner(utilisateur, parking);
                     i=1;
                     break;
                 case 2:
-
-                    System.out.println("Merci de renseigner votre code de parking avant de sortir");
-                    String code = scanner.next();
-                    message = parking.recupererVoiture(code);
-                    System.out.println(message);
-
+                    menu.recuperer(parking);
                     i=1;
                     break;
                 case 3:
-
                     i=2;
                     break;
 
